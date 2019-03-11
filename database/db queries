@@ -1,0 +1,90 @@
+25/09/2017
+ALTER TABLE `acct_vats` ADD `companyRef` VARCHAR(55) NULL AFTER `vatRef`;
+<<<<<<< HEAD
+=======
+
+
+
+3/10/2017
+ALTER TABLE `acct_inventory` DROP `productCode`;
+ALTER TABLE `acct_inventory` CHANGE `productName` `productRef` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+04/10/2017
+ALTER TABLE `acct_transactions` ADD `invoiceNo` VARCHAR(255) NOT NULL AFTER `transactionID`;
+
+ALTER TABLE `acct_transactions` CHANGE `paymentMethod` `paymentMethod` TINYINT(2) NOT NULL DEFAULT '1' COMMENT '1 for cash , 2 for bank, 3 for credit card 4 card and 5 cheque';
+
+05/10/2017
+ALTER TABLE `acct_clientProfile` ADD `sameAsBilling` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '1 for same 0 for not same' AFTER `shippingAddress`;
+
+07/10/2017
+ALTER TABLE `acct_login` ADD `isDeleted` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '0 for not deleted 1 for deleted' AFTER `status`;
+ALTER TABLE `acct_clientProfile` ADD `isDeleted` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '0 for not deleted 1 for deleted' AFTER `status`;
+
+09/10/2017
+ALTER TABLE `acct_transactionItems` CHANGE `product` `productRef` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `acct_transactions` ADD `deliveryDate` VARCHAR(255) NULL AFTER `status`, ADD `invoiceDate` VARCHAR(255) NULL AFTER `deliveryDate`;
+ALTER TABLE `acct_inventory` ADD `transactionRef` VARCHAR(255) NULL AFTER `inventoryCategoryRef`, ADD `itemRef` VARCHAR(255) NULL AFTER `transactionRef`;
+<<<<<<< HEAD
+
+10/10/2017
+ALTER TABLE `acct_transactions` ADD `subTotal` DOUBLE(10,2) NULL AFTER `paymentMethod`, ADD `vatTotal` DOUBLE(10,2) NULL AFTER `subTotal`, ADD `grandTotal` DOUBLE(10,2) NULL AFTER `vatTotal`;
+
+ALTER TABLE `acct_transactions` ADD `discountType` ENUM('percentage','price') NULL AFTER `grandTotal`, ADD `discountAmount` VARCHAR(55) NULL AFTER `discountType`, ADD `commisionType` ENUM('percentage','price') NULL AFTER `discountAmount`, ADD `commisionAmount` VARCHAR(55) NULL AFTER `commisionType`;
+
+ALTER TABLE `acct_transactions` ADD `paymentStatus` VARCHAR(255) NULL AFTER `status`;
+ALTER TABLE `acct_transactions` CHANGE `paymentStatus` `paymentStatus` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT 'pending/paid'
+
+ALTER TABLE `acct_transactions` CHANGE `discountType` `discountType` ENUM('1','2') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '1 for price,2 for percentage', CHANGE `commisionType` `commisionType` ENUM('1','2') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '1 for price,2 for percentage';
+=======
+>>>>>>> 45cbb40e42093f70fc1391de03ec5ec4a2376085
+>>>>>>> pardeep
+
+
+16/10/2017
+ALTER TABLE `acct_transactions` CHANGE `subTotal` `subTotal` VARCHAR(100) NULL DEFAULT NULL, CHANGE `vatTotal` `vatTotal` VARCHAR(100) NULL DEFAULT NULL, CHANGE `grandTotal` `grandTotal` VARCHAR(100) NULL DEFAULT NULL;
+
+ALTER TABLE `acct_trialBalanceCategories` ADD `companyRef` VARCHAR(255) NOT NULL AFTER `categoryID`;
+ALTER TABLE `acct_trialBalanceCategories` ADD `addedBy` VARCHAR(255) NOT NULL AFTER `status`;
+ALTER TABLE `acct_trialBalanceCategories` ADD `ParentCategoryRef` VARCHAR(255) NOT NULL AFTER `categoryRef`;
+
+23/10/2017
+ALTER TABLE `acct_loans` ADD `type` INT(11) NOT NULL COMMENT '1 for loans and 2 for borrowings' AFTER `status`, ADD `paymentStatus` VARCHAR(100) NULL AFTER `type`, ADD `paymentDate` DATE NULL AFTER `paymentStatus`;
+ALTER TABLE `acct_loans` CHANGE `paymentStatus` `paymentStatus` ENUM('pending','pain') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'pending';
+
+23/10/2017
+ALTER TABLE `acct_trialBalanceCategories` CHANGE `ParentCategoryRef` `ParentCategoryRef` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `acct_transactions` ADD `purchaseType` INT(11) NULL DEFAULT NULL COMMENT '1 for service 2 for product' AFTER `paymentStatus`;
+
+30/10/2017
+ALTER TABLE `acct_transactions` ADD `bankRef` VARCHAR(100) NULL AFTER `paymentMethod`;
+
+01/11/2017
+ALTER TABLE `acct_transactions` CHANGE `deliveryDate` `deliveryDate` DATE NULL DEFAULT NULL, CHANGE `invoiceDate` `invoiceDate` DATE NULL DEFAULT NULL;
+ALTER TABLE `acct_debtors` ADD `debtorCompanyRef` VARCHAR(100) NULL AFTER `debtorRef`;
+ALTER TABLE `acct_creditors` ADD `creditorCompanyRef` VARCHAR(100) NULL AFTER `creditorRef`;
+RENAME TABLE `accounting`.`acct_borrowerCompanies` TO `accounting`.`acct_Company`;
+RENAME TABLE `accounting`.`acct_Company` TO `accounting`.`acct_company`;
+
+
+02/11/2017
+ALTER TABLE `acct_shareHolder` ADD `shareholCompanyRef` VARCHAR(100) NULL AFTER `shareRef`;
+ALTER TABLE `acct_company` CHANGE `type` `type` INT(11) NULL DEFAULT NULL COMMENT '1 for borrower 2 for debtor 3 for creditor 4 for shareholder';
+ALTER TABLE `acct_transactionItems` ADD `discountAmountPerItem` VARCHAR(150) NULL AFTER `vatPercentage`, ADD `commisionAmountPerItem` VARCHAR(150) NULL AFTER `discountAmountPerItem`;
+
+
+ALTER TABLE `acct_transactionItems` ADD `qtyTypeRef` VARCHAR(50) NOT NULL AFTER `quantity`;
+ALTER TABLE `acct_inventory` ADD `qtyTypeRef` VARCHAR(55) NOT NULL AFTER `quantity`;
+ALTER TABLE `acct_inventory` CHANGE `qtyTypeRef` `qtyTypeRef` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+
+ALTER TABLE `acct_measurement` ADD `companyRef` VARCHAR(100) NOT NULL AFTER `status`, ADD `createdDate` DATE NOT NULL AFTER `companyRef`, ADD `modifiedDate` DATE NOT NULL AFTER `createdDate`, ADD `addedBy` VARCHAR(100) NOT NULL AFTER `modifiedDate`;
+
+9-11-2017
+ALTER TABLE `acct_transactions` CHANGE `transactionType` `transactionType` TINYINT(2) NOT NULL DEFAULT '1' COMMENT '1 for purchase 2 for sale 3 for expense 4 for purchase return and 5 for sale return';
+ALTER TABLE `acct_inventory` CHANGE `inventoryType` `inventoryType` TINYINT(2) NOT NULL DEFAULT '1' COMMENT '1 for purchase 2 for sale 3 for expense 4 for purchase return and 5 for sale return';
+
+10-11-2017
+ALTER TABLE `acct_loans` ADD `bankRef` VARCHAR(100) NULL AFTER `companyRef`;
+16-11-2017
+ALTER TABLE `acct_shareCapital` ADD `bankRef` VARCHAR(100) NULL AFTER `paymentMethod`;
